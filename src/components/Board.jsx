@@ -13,7 +13,7 @@ const Board = forwardRef((props, ref) => {
   const [showVictoryDialog, setShowVictoryDialog] = useState(false);
   const [showDefeatDialog, setShowDefeatDialog] = useState(false);
 
-  // Función para inicializar las cartas
+
   const initCards = () => {
     const cardsData = [...iconNames, ...iconNames];
     for (let i = cardsData.length - 1; i > 0; i--) {
@@ -28,7 +28,7 @@ const Board = forwardRef((props, ref) => {
     }));
   };
 
-  const [cards, setCards] = useState(initCards()); // Inicializa las cartas usando la función initCards
+  const [cards, setCards] = useState(initCards());
   const [flippedIndices, setFlippedIndices] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [attempts, setAttempts] = useState(0);
@@ -41,7 +41,7 @@ const Board = forwardRef((props, ref) => {
   }, [flippedIndices]);
 
   const initializeGame = () => {
-    // Restablece el juego volviendo a inicializar las cartas
+
     setCards(initCards());
     setFlippedIndices([]);
     setMatchedPairs([]);
@@ -51,23 +51,23 @@ const Board = forwardRef((props, ref) => {
   };
 
   const handleVictory = () => {
-    // Muestra el mensaje de victoria
+
     setShowVictoryDialog(true);
   };
 
   const handleDefeat = () => {
-    // Muestra el mensaje de derrota
+
     setShowDefeatDialog(true);
   };
 
-  // Asegúrate de que initializeGame sea accesible a través de la referencia
+  
   useImperativeHandle(ref, () => ({
     initializeGame
   }));
 
   const handleCardClick = (id) => {
     if (matchedPairs.includes(cards[id].iconName.type) || flippedIndices.includes(id) || flippedIndices.length >= 2) {
-      // Si la carta ya está emparejada, ya está volteada o ya hay dos cartas volteadas, no hacer nada
+
       return;
     }
 
@@ -86,7 +86,7 @@ const Board = forwardRef((props, ref) => {
     const card2 = cards.find((card) => card.id === id2);
 
     if (card1.iconName.type === card2.iconName.type) {
-      // Si las cartas coinciden, agrégalas a las cartas emparejadas
+  
       const newMatchedPairs = [...matchedPairs, card1.iconName.type];
       const newCards = cards.map((card) => {
         if (flippedIndices.includes(card.id)) {
@@ -100,13 +100,12 @@ const Board = forwardRef((props, ref) => {
       setCards(newCards);
 
       if (newMatchedPairs.length === cards.length / 2) {
-        // Si todas las cartas están emparejadas, mostrar un mensaje de victoria
-        //alert('¡Has ganado!');
+        
         setShowVictoryDialog(true);
-        //initializeGame();
+       
       }
     } else {
-      // Si no coinciden, llama a la función para voltear automáticamente las cartas no coincidentes
+   
       setTimeout(() => {
         resetUnmatchedCards();
       }, 1000);
@@ -126,10 +125,9 @@ const Board = forwardRef((props, ref) => {
     setCards(newCards);
 
     if (attempts + 1 >= maxAttempts) {
-      // Si se supera el límite de intentos, mostrar un mensaje de derrota
-      //alert('¡Has perdido! Se ha superado el límite de intentos.');
+
       setShowDefeatDialog(true);
-      //initializeGame();
+
     }
   };
 
@@ -150,24 +148,24 @@ const Board = forwardRef((props, ref) => {
         ))}
       </div>
 
-      {/* Mostrar el cuadro de diálogo de victoria */}
+
       {showVictoryDialog && (
         <MessageDialog
           message="¡Has ganado!"
           onClose={() => {
             setShowVictoryDialog(false);
-            initializeGame(); // Reiniciar el juego
+            initializeGame(); 
           }}
         />
       )}
 
-      {/* Mostrar el cuadro de diálogo de derrota */}
+
       {showDefeatDialog && (
         <MessageDialog
           message="¡Has perdido! Se ha superado el límite de intentos."
           onClose={() => {
             setShowDefeatDialog(false);
-            initializeGame(); // Reiniciar el juego
+            initializeGame(); 
           }}
         />
       )}

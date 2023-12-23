@@ -1,4 +1,4 @@
-// App.js
+
 import React, { useRef } from 'react';
 import './App.css';
 import Board from './components/Board';

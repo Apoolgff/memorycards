@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Memory Card Game</h1>
+      <h1>Memory Cards Game</h1>
       <button className="btn" onClick={restartGame}>Restart Game</button>
       <Board ref={boardRef} />
     </div>
